@@ -6,24 +6,25 @@ import java.util.regex.Matcher;
 public class ConsonantLetters {
     private final String patternThreeConsonantLetters = "\\b[a-zA-Z&&[^aeiouAEIOU]]{3}\\w+";
     public String ReplaceWordWithThreeConsonantLetters(String sourceText, String replaceWord) {
-        if (sourceText == null) return null;
+        if (sourceText == null || sourceText == "") return null;
 
         Pattern pattern = Pattern.compile(patternThreeConsonantLetters, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(sourceText);
-        //boolean matchFound = matcher.find();
 
-//        if(matchFound) {
-//            System.out.println("Match found");
-//        } else {
-//            System.out.println("Match not found");
-//        }
+        int lastIndex = 0;
+        StringBuilder output = new StringBuilder();
+        Matcher matcher = pattern.matcher(sourceText);
 
         while (matcher.find()) {
-            System.out.println("Match: " + matcher.group(0));
-            System.out.println("Start: " + matcher.start());
-            System.out.println("End: " + matcher.end());
+            output.append(sourceText, lastIndex, matcher.start())
+                    .append(replaceWord);
+
+            lastIndex = matcher.end();
         }
 
-        return "ready";
+        if (lastIndex < sourceText.length()) {
+            output.append(sourceText, lastIndex, sourceText.length());
+        }
+
+        return output.toString();
     }
 }
