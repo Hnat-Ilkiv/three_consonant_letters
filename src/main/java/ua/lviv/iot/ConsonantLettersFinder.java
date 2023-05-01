@@ -3,16 +3,17 @@ package ua.lviv.iot;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-public class ConsonantLetters {
-    private final String patternThreeConsonantLetters = "\\b[a-zA-Z&&[^aeiouAEIOU]]{3}\\w+";
-    public String ReplaceWordWithThreeConsonantLetters(String sourceText, String replaceWord) {
-        if (sourceText == null || sourceText == "") return null;
-
-        Pattern pattern = Pattern.compile(patternThreeConsonantLetters, Pattern.CASE_INSENSITIVE);
+public class ConsonantLettersFinder {
+  public static final String PATTERN_THREE_CONSONANT_LETTERS = "\\b[a-zA-Z&&[^aeiouAEIOU]]{3}\\w+";
+  public static final Pattern PATTERN = Pattern.compile(PATTERN_THREE_CONSONANT_LETTERS, Pattern.CASE_INSENSITIVE);
+    public String ReplaceWordWithThreeConsonantLetters(final String sourceText, final String replaceWord) {
+        if (sourceText ==  null || sourceText == "") {
+            return null;
+        }
 
         int lastIndex = 0;
         StringBuilder output = new StringBuilder();
-        Matcher matcher = pattern.matcher(sourceText);
+        Matcher matcher = PATTERN.matcher(sourceText);
 
         while (matcher.find()) {
             output.append(sourceText, lastIndex, matcher.start())
